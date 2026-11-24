@@ -1,0 +1,53 @@
+name: Windows derleme
+run-name: Skorbord Windows derlemesi
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  windows:
+    name: Windows icin derle
+    runs-on: windows-2022
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Eklentiyi derle
+        uses: ./.github/actions/build-plugin
+        with:
+          target: x64
+          config: Release
+
+      - name: Kurulum paketini hazirla
+        run: |
+          $dist = "dist"
+          New-Item -ItemType Directory -Force -Path $dist | Out-Null
+          Copy-Item -Recurse -Force "release/Release/obs-skorbord" "$dist/obs-skorbord"
+          Get-ChildItem -Recurse "$dist/obs-skorbord" -Filter *.pdb | Remove-Item -Force
+          Copy-Item "installer/KUR.bat" "$dist/KUR.bat"
+          Copy-Item "installer/KALDIR.bat" "$dist/KALDIR.bat"
+          Copy-Item "installer/OKU-BENI.txt" "$dist/OKU-BENI.txt"
+          Get-ChildItem -Recurse $dist | Select-Object FullName
+          Compress-Archive -Path "$dist/*" -DestinationPath "obs-skorbord-windows.zip" -Force
+
+      - name: Derleme ciktisini yukle
+        uses: actions/upload-artifact@v4
+        with:
+          name: obs-skorbord-windows
+          path: obs-skorbord-windows.zip
+
+      - name: Indirme sayfasini guncelle (Releases)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --yes --cleanup-tag 2>$null
+          $global:LASTEXITCODE = 0
+          gh release create latest obs-skorbord-windows.zip --title "Skorbord - son surum" --notes "obs-skorbord-windows.zip dosyasini indirin, zipten cikartip KUR.bat dosyasina cift tiklayin."

@@ -1,0 +1,28 @@
+OBS SKORBORD EKLENTISI
+======================
+(OBS Studio 31 veya daha yeni, Windows 64-bit)
+
+KURULUM
+1) OBS'i kapatin.
+2) KUR.bat dosyasina cift tiklayin, yonetici iznine "Evet" deyin.
+3) OBS'i acin. Sag tarafta "Skorbord" paneli kendiliginden acilir.
+   (Kapatirsaniz: ust menude Paneller > Skorbord)
+
+SKORBORDU SAHNEYE EKLEME
+1) Kaynaklar > + > "Skorbord"
+2) Acilan pencerede "Skorbord gorseli" > Gozat ile kendi gorselinizi secin > Tamam
+3) Kaynagi sahnede istediginiz yere surukleyin, kosesinden buyutun.
+   Takim adlari, skorlar ve periyot gorselle birlikte hareket eder.
+
+KULLANIM
+- Panelden takim adlarini yazin, skorlari - / + / +2 / +3 ile degistirin.
+- Klavye kisayolu: Ayarlar > Kisayollar > "Skorbord: ..." satirlarina tus atayin.
+- Skorlar OBS kapansa da kaydedilir.
+
+AYARLAR (kaynaga cift tiklayin)
+- Yazi tipi, takim adi / skor / periyot rengi, yazi boyutlari
+- Periyot yazisi: 1.C (ceyrek), 1.Y (yari), SET ...
+- "Yerlesim (gelismis)": baska bir gorsel kullanirsaniz yazilarin yerini ayarlayin.
+
+KALDIRMA
+KALDIR.bat dosyasina cift tiklayin.
